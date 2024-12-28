@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор</title>
+</head>
+<body>
+    <h1>Калькулятор</h1>
+    <form id="calculatorForm">
+        <label for="firstNumber">Введите первое число:</label>
+        <input type="number" id="firstNumber" required><br><br>
+
+        <label for="secondNumber">Введите второе число:</label>
+        <input type="number" id="secondNumber" required><br><br>
+
+        <label for="operation">Введите действие (1 - сложение, 2 - вычитание, 3 - умножение, 4 - деление):</label>
+        <input type="number" id="operation" min="1" max="4" required><br><br>
+
+        <button type="button" onclick="calculate()">Получить результат</button>
+    </form>
+
+    <h2>Результат:</h2>
+    <p id="result"></p>
+
+    <script>
+        function calculate() {
+            const firstNumber = parseFloat(document.getElementById('firstNumber').value);
+            const secondNumber = parseFloat(document.getElementById('secondNumber').value);
+            const operation = parseInt(document.getElementById('operation').value);
+            let result;
+
+            switch (operation) {
+                case 1:
+                    result = firstNumber + secondNumber;
+                    break;
+                case 2:
+                    result = firstNumber - secondNumber;
+                    break;
+                case 3:
+                    result = firstNumber * secondNumber;
+                    break;
+                case 4:
+                    result = firstNumber / secondNumber;
+                    break;
+                default:
+                    result = 'Неизвестная операция';
+            }
+
+            document.getElementById('result').textContent = result;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Система подбора персонала</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">Система подбора персонала</h1>
+        
+        <!-- Форма добавления вакансии -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2>Добавить вакансию</h2>
+            </div>
+            <div class="card-body">
+                <form id="jobForm">
+                    <div class="form-group">
+                        <label for="jobTitle">Название вакансии</label>
+                        <input type="text" class="form-control" id="jobTitle" name="jobTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="jobDescription">Описание вакансии</label>
+                        <textarea class="form-control" id="jobDescription" name="jobDescription" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="jobRequirements">Требования</label>
+                        <textarea class="form-control" id="jobRequirements" name="jobRequirements" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Добавить вакансию</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Список вакансий -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Список вакансий</h2>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Название</th>
+                            <th>Описание</th>
+                            <th>Требования</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="jobList">
+                        <!-- Сюда будут добавляться вакансии через JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const jobForm = document.getElementById('jobForm');
+            const jobList = document.getElementById('jobList');
+
+            // Обработка отправки формы
+            jobForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                // Получаем данные из формы
+                const jobTitle = document.getElementById('jobTitle').value;
+                const jobDescription = document.getElementById('jobDescription').value;
+                const jobRequirements = document.getElementById('jobRequirements').value;
+
+                // Создаем новую строку для таблицы
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>${jobTitle}</td>
+                    <td>${jobDescription}</td>
+                    <td>${jobRequirements}</td>
+                    <td>
+                        <button class="btn btn-sm btn-info" onclick="editJob(this)">Редактировать</button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteJob(this)">Удалить</button>
+                    </td>
+                `;
+
+                // Добавляем строку в таблицу
+                jobList.appendChild(newRow);
+
+                // Очищаем форму
+                jobForm.reset();
+            });
+
+            // Функция для редактирования вакансии
+            window.editJob = function (button) {
+                const row = button.closest('tr');
+                const cells = row.querySelectorAll('td');
+
+                // Заполняем форму данными из строки
+                document.getElementById('jobTitle').value = cells[0].textContent;
+                document.getElementById('jobDescription').value = cells[1].textContent;
+                document.getElementById('jobRequirements').value = cells[2].textContent;
+
+                // Удаляем строку из таблицы
+                row.remove();
+            };
+
+            // Функция для удаления вакансии
+            window.deleteJob = function (button) {
+                const row = button.closest('tr');
+                row.remove();
+            };
+        });
+    </script>
+</body>
+</html>

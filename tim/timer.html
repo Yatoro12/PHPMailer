@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Таймер обратного отсчета</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .timer {
+            display: flex;
+            background-color: transparent;
+            color: #000;
+            padding: 20px;
+            align-items: baseline;
+        }
+
+        .timer-block {
+            text-align: center;
+            margin: 0 10px;
+        }
+
+        .timer-block span {
+            display: block;
+        }
+
+        #days, #hours, #minutes, #seconds {
+            font-size: 4em;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .label {
+            font-size: 1.5em;
+            color: #555;
+        }
+
+        .colon {
+            font-size: 4em;
+            font-weight: bold;
+            color: #000;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="timer">
+        <div class="timer-block">
+            <span id="days">00</span>
+            <span class="label">ДНЯ</span>
+        </div>
+        <span class="colon">:</span>
+        <div class="timer-block">
+            <span id="hours">00</span>
+            <span class="label">ЧАСОВ</span>
+        </div>
+        <span class="colon">:</span>
+        <div class="timer-block">
+            <span id="minutes">00</span>
+            <span class="label">МИНУТЫ</span>
+        </div>
+        <span class="colon">:</span>
+        <div class="timer-block">
+            <span id="seconds">00</span>
+            <span class="label">СЕКУНДЫ</span>
+        </div>
+    </div>
+    <script>
+        function updateTimer() {
+            const targetDate = new Date('2025-06-20T00:00:00');
+            const now = new Date();
+            const difference = targetDate - now;
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+        setInterval(updateTimer, 1000);
+        updateTimer();
+    </script>
+</body>
+</html>

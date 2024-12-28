@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Аккордеон Меню</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0; /* Цвет фона страницы */
+        }
+
+        .accordion {
+            max-width: 400px; /* Максимальная ширина аккордеона */
+            margin: 20px auto; /* Отступы сверху и снизу */
+            background-color: #1db131;
+             /* Цвет фона аккордеона */
+             /* Закругленные углы */
+        }
+
+        .item {
+            border-bottom: 1px solid #fff; /* Граница между пунктами */
+        }
+
+        .header {
+            padding: 15px; /* Отступы внутри заголовка */
+            cursor: pointer; /* Указатель на курсор при наведении */
+            color: #000; /* Черный цвет текста заголовка */
+            position: relative; /* Для позиционирования псевдоэлемента */
+        }
+
+        .header::after {
+            content: "+"; /* Значок плюса */
+            position: absolute;
+            right: 15px; /* Отступ справа */
+            font-size: 18px; /* Размер значка */
+            font-weight: bold;
+            color: #fff; /* Белый цвет значка */
+            transition: transform 0.3s ease; /* Анимация поворота */
+        }
+
+        .header.active::after {
+            content: "−"; /* Значок минуса */
+            transform: rotate(180deg); /* Поворот на 180 градусов */
+        }
+
+        .content {
+            display: none; /* Скрываем контент по умолчанию */
+            padding-left: 15px; /* Отступ для вложенных пунктов */
+            color: #000; /* Черный цвет текста вложенных пунктов */
+        }
+
+        .sub-accordion .header {
+            background-color: #1db131; /* Цвет фона для вложенных аккордеонов */
+        }
+
+        .sub-sub-accordion .header {
+            background-color: #1db131; /* Цвет фона для глубоко вложенных аккордеонов */
+        }
+    </style>
+</head>
+<body>
+    <div class="accordion"> <!-- Контейнер для аккордеона -->
+        <div class="item">
+            <div class="header">Акции</div> <!-- Заголовок первого пункта -->
+            <div class="content">
+                <div>На кассе</div> <!-- Пункт меню под Акции -->
+                <div>Продукты питания</div> <!-- Пункт меню под Акции -->
+                <div>Бытовая химия</div> <!-- Пункт меню под Акции -->
+            </div>
+        </div>
+        <div class="item"> <!-- Второй пункт меню -->
+            <div class="header">Рейтинг товаров</div> 
+            <div class="content">
+                <div>Что нового</div> <!-- Пункт меню под Рейтинг товаров -->
+                <div>Товары с высоким рейтингом</div> <!-- Пункт меню под Рейтинг товаров -->
+                <div>Постоянным покупателям</div> 
+            </div>
+        </div>
+        <div class="item"> <!-- Третий пункт меню -->
+            <div class="header">Магазины</div>
+            <div class="content">
+                <div class="sub-accordion">
+                    <div class="item">
+                        <div class="header">Москва</div>
+                        <div class="content">
+                            <div>Авиапарк</div>
+                            <div>Ривьера</div>
+                            <div>Европа</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-accordion">
+                    <div class="item">
+                        <div class="header">Московская область</div>
+                        <div class="content">
+                            <div class="sub-sub-accordion">
+                                <div class="item">
+                                    <div class="header">Зеленоград</div>
+                                    <div class="content">
+                                        <div>Столица</div>
+                                        <div>Панфиловский</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>Балашиха</div>
+                            <div>Королев</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Функция для переключения видимости контента
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            content.style.display = content.style.display === 'block' ? 'none' : 'block';
+            header.classList.toggle('active'); // Добавляем/убираем класс active
+        }
+
+        // Получаем все заголовки аккордеонов
+        const headers = document.querySelectorAll('.accordion .header, .sub-accordion .header, .sub-sub-accordion .header');
+
+        // Добавляем обработчик события на каждый заголовок
+        headers.forEach(header => {
+            header.addEventListener('click', () => {
+                toggleAccordion(header);
+            });
+        });
+    </script>
+</body>
+</html>
